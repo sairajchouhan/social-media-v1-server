@@ -50,17 +50,24 @@ export const getLoggedInUserProfile = async (_: Request, res: Response) => {
 export const addUserProfile = async (req: Request, res: Response) => {
   const { bio, photo } = req.body;
   const { user } = res.locals;
-  const profileSearchObj: any = {};
-  const authUser = await User.findOne({ username: user.username });
+  const authUser = await User.findOne(
+    { username: user.username },
+    { relations: ['profile'] }
+  );
 
   if (!authUser) return res.json({ error: 'user not found' });
-  if (bio) profileSearchObj.bio = bio;
-  if (photo) profileSearchObj.photo = photo;
 
-  const profile = Profile.create({ bio, photo });
-  authUser.profile = profile;
+  let userProfile = await Profile.findOne({
+    where: { id: authUser.profile.id },
+  });
 
-  await profile.save();
+  if (!userProfile) return res.json({ error: 'user profile not found' });
+
+  userProfile.bio = bio || userProfile.bio;
+  userProfile.photo = photo || userProfile.photo;
+  authUser.profile = userProfile;
+
+  await userProfile.save();
   await authUser.save();
-  return res.json(profile);
+  return res.json(authUser);
 };
