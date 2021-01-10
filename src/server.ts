@@ -41,7 +41,7 @@ import likeRoutes from './routes/likeRoutes';
     })
     .catch((err) => {
       console.log('error in connecting database');
-      console.log(err);
+      console.log(err.message);
     });
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
