@@ -1,4 +1,6 @@
 import 'reflect-metadata';
+import dotenv from 'dotenv';
+dotenv.config();
 import { createConnection } from 'typeorm';
 import express, { Request, Response } from 'express';
 import morgan from 'morgan';
@@ -11,13 +13,15 @@ import postRoutes from './routes/postRoutes';
 import commentRoutes from './routes/commentRoutes';
 import likeRoutes from './routes/likeRoutes';
 
+import { devConnection } from './config';
+
 (async () => {
   const app = express();
 
   app.use(
     cors({
       credentials: true,
-      origin: 'http://localhost:3000',
+      origin: process.env.ORIGIN,
       optionsSuccessStatus: 200,
     })
   );
@@ -35,7 +39,7 @@ import likeRoutes from './routes/likeRoutes';
     res.send('working');
   });
 
-  createConnection()
+  createConnection(devConnection)
     .then(() => {
       console.log('conection established');
     })
