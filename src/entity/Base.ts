@@ -1,4 +1,3 @@
-import { classToPlain, Exclude } from 'class-transformer';
 import {
   PrimaryGeneratedColumn,
   Column,
@@ -7,6 +6,7 @@ import {
   UpdateDateColumn,
   BeforeInsert,
 } from 'typeorm';
+import { classToPlain, Exclude } from 'class-transformer';
 
 import { v4 as uuid } from 'uuid';
 

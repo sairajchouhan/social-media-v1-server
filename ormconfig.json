@@ -1,11 +1,11 @@
 {
    "type": "postgres",
-   "host": "localhost",
+   "host": "ec2-52-22-135-159.compute-1.amazonaws.com",
    "port": 5432,
    "username": "postgres",
    "password": "aunzbedi",
    "database": "sm1",
-   "synchronize": true,
+   "synchronize": false,
    "logging": false,
    "entities": [
       "src/entity/**/*.ts"
