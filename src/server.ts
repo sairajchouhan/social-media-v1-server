@@ -13,8 +13,6 @@ import postRoutes from './routes/postRoutes';
 import commentRoutes from './routes/commentRoutes';
 import likeRoutes from './routes/likeRoutes';
 
-import { devConnection } from './config';
-
 (async () => {
   const app = express();
 
@@ -39,16 +37,16 @@ import { devConnection } from './config';
     res.send('working');
   });
 
-  createConnection(devConnection)
+  createConnection()
     .then(() => {
-      console.log('conection established');
+      console.log('conenected to database');
+      const PORT = process.env.PORT || 5000;
+      app.listen(PORT, () => {
+        console.log('server started');
+      });
     })
     .catch((err) => {
       console.log('error in connecting database');
       console.log(err.message);
     });
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => {
-    console.log('server started');
-  });
 })();
